@@ -39,7 +39,7 @@ export class Cue {
 
     if (this.errCode !== 0) {
       displayError('The Corsair SDK is not connected. Please check that iCue is opened and that you have <a style="color: white; text-decoration: underline" href="https://github.com/augustinbegue/icue-ambilight/blob/master/Q%26A.md#how-to-enable-the-sdk-" target="_blank">enabled the sdk in the settings</a>. Then, close this warning to reload the app.', true);
-      return;
+      return false;
     }
 
     this.info = this.getDevicesInfo();

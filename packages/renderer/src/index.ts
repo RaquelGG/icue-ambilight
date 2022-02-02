@@ -44,8 +44,12 @@ function handleWindowControls() {
     }
 }
 
+async function sleep(ms: number) {
+    return new Promise(resolve => setTimeout(resolve, ms));
+}
+
 // When document has loaded, initialise the app
-document.onreadystatechange = () => {
+document.onreadystatechange = async () => {
     if (document.readyState == 'complete') {
         const config = window.store.get('config') as StoredConfig;
 
@@ -53,7 +57,12 @@ document.onreadystatechange = () => {
         handleWindowControls();
 
         // Layout panels
-        new Panels();
+        let sleepTime = 100;
+        // Amibilight initialisation
+        while (await Cue.init() === false) {
+            await sleep(sleepTime);
+            sleepTime = Math.min(60000, sleepTime*2);
+        }
 
         // Amibilight initialisation
         Cue.init();
